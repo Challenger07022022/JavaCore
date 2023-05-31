@@ -1,0 +1,8 @@
+FROM bellsoft/liberica-openjdk-alpine:11.0.16 as BuildProject
+WORKDIR /app
+COPY ./java ./src
+RUN mkdir ./out
+RUN javac -sourcepath ./src -d out ./src/ru/geekbrains/hw1/program/sample/Main.java
+
+FROM scratch as OutputFiles
+COPY --from=BuildProject /app/out /bin
